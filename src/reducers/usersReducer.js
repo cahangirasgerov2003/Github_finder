@@ -5,6 +5,7 @@ const UserReducer = (state, action) => {
         ...state,
         users: [],
       };
+
     case "LOADING":
       return {
         ...state,

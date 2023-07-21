@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-const Navbar = ({ icon, title }) => {
+import UserContext from "../contexts/usersContext";
+
+const Navbar = () => {
+  const { icon, title } = useContext(UserContext);
   return (
     <nav className="navbar navbar-dark bg-primary">
       <div className="container">

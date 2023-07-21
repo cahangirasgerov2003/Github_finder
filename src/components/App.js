@@ -4,6 +4,7 @@ import UserList from "./UserlList";
 import Search from "./Search";
 import Alert from "./Alert";
 import UserReducer from "../reducers/usersReducer";
+import UserContext from "../contexts/usersContext";
 
 const App = () => {
   const [state, dispatch] = useReducer(UserReducer, {
@@ -56,17 +57,25 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Navbar icon="bi bi-github" title="Github" />
+    <UserContext.Provider
+      value={{
+        icon: "bi bi-github",
+        title: "Github",
+        searchResult,
+        clearResult,
+        users: state.users,
+        createErrorMessage,
+        loading: state.loading,
+      }}
+    >
+      <Navbar />
       <Search
-        searchResult={searchResult}
-        clearResult={clearResult}
-        controlUsers={state.users}
-        createErrorMessage={createErrorMessage}
+      // controlUsers={state.users}
+      // createErrorMessage={createErrorMessage}
       />
       {error !== null ? <Alert error={error} /> : ""}
-      <UserList loading={state.loading} users={state.users} />
-    </div>
+      <UserList />
+    </UserContext.Provider>
   );
 };
 

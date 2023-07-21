@@ -1,14 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import UserContext from "../contexts/usersContext";
 
 let event = null;
 
-const Search = ({
-  clearResult,
-  controlUsers,
-  searchResult,
-  createErrorMessage,
-}) => {
+const Search = () => {
   const [keyword, setKeyword] = useState("");
+  const { clearResult, users, searchResult, createErrorMessage } =
+    useContext(UserContext);
 
   const searchGithub = (e) => {
     e.preventDefault();
@@ -54,7 +52,7 @@ const Search = ({
           Search
         </button>
       </form>
-      {controlUsers.length > 0 ? (
+      {users.length > 0 ? (
         <button
           type="button"
           className="btn btn-outline-danger w-100"
