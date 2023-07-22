@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import Loading from "./Loading";
 
 import User from "./User";
-import UserContext from "../contexts/usersContext";
+import { UserContext } from "../contexts/usersContext";
 
 const UserlList = () => {
   const { loading, users } = useContext(UserContext);

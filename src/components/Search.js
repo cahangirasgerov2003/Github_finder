@@ -1,12 +1,11 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import UserContext from "../contexts/usersContext";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../contexts/usersContext";
 
 let event = null;
 
-const Search = () => {
+const Search = ({ createErrorMessage }) => {
   const [keyword, setKeyword] = useState("");
-  const { clearResult, users, searchResult, createErrorMessage } =
-    useContext(UserContext);
+  const { clearResult, users, searchResult } = useContext(UserContext);
 
   const searchGithub = (e) => {
     e.preventDefault();
@@ -14,27 +13,15 @@ const Search = () => {
     setKeyword(e.target.previousSibling.value);
   };
 
-  const searchResultCallback = useCallback(() => {
-    searchResult(keyword);
-  }, [keyword]);
-
-  const createErrorMessageCallback = useCallback(() => {
+  useEffect(() => {
     if (keyword !== "") {
+      searchResult(keyword);
+      event.target.previousSibling.value = "";
       createErrorMessage(null, null);
     } else {
       createErrorMessage("You are expected to enter a keyword!", "danger");
     }
   }, [keyword]);
-
-  useEffect(() => {
-    if (keyword !== "") {
-      searchResultCallback();
-      event.target.previousSibling.value = "";
-      createErrorMessageCallback();
-    } else {
-      createErrorMessageCallback();
-    }
-  }, [keyword, searchResultCallback, createErrorMessageCallback]);
 
   return (
     <div className="container my-3">
