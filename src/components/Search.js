@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/usersContext";
+import { ErrorMessage } from "../contexts/errorsContext";
 
 let event = null;
 
-const Search = ({ createErrorMessage }) => {
+const Search = () => {
   const [keyword, setKeyword] = useState("");
   const { clearResult, users, searchResult } = useContext(UserContext);
+
+  const { createErrorMessage } = useContext(ErrorMessage);
 
   const searchGithub = (e) => {
     e.preventDefault();
