@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../contexts/usersContext";
 import { ErrorMessage } from "../contexts/errorsContext";
 
@@ -10,6 +10,8 @@ const Search = () => {
 
   const { createErrorMessage } = useContext(ErrorMessage);
 
+  const searchRef = useRef(keyword);
+
   const searchGithub = (e) => {
     e.preventDefault();
     event = e;
@@ -17,14 +19,17 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (keyword !== "") {
-      searchResult(keyword);
-      event.target.previousSibling.value = "";
-      createErrorMessage(null, null);
-    } else {
-      createErrorMessage("You are expected to enter a keyword!", "danger");
+    if (searchRef.current !== keyword) {
+      if (keyword !== "") {
+        searchResult(keyword);
+        event.target.previousSibling.value = "";
+        createErrorMessage(null, null);
+      } else {
+        createErrorMessage("You are expected to enter a keyword!", "danger");
+      }
+      searchRef.current = keyword;
     }
-  }, [keyword]);
+  }, [keyword, createErrorMessage, searchResult]);
 
   return (
     <div className="container my-3">
